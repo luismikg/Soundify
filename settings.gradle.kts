@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SpotifyApp"
+rootProject.name = "Soundify"
 include(":app")
  

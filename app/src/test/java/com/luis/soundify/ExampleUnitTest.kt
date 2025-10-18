@@ -1,4 +1,4 @@
-package com.luis.spotifyapp
+package com.luis.soundify
 
 import org.junit.Test
 

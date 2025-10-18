@@ -1,4 +1,4 @@
-package com.luis.spotifyapp.ui.theme
+package com.luis.soundify.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

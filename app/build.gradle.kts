@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.luis.spotifyapp"
+    namespace = "com.luis.soundify"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.luis.spotifyapp"
+        applicationId = "com.luis.soundify"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
