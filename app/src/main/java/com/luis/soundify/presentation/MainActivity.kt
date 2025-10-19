@@ -1,4 +1,4 @@
-package com.luis.soundify
+package com.luis.soundify.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,7 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.luis.soundify.ui.theme.SoundifyTheme
+import com.luis.soundify.R
+import com.luis.soundify.presentation.theme.SoundifyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

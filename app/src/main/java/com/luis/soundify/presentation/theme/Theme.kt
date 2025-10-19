@@ -1,4 +1,4 @@
-package com.luis.soundify.ui.theme
+package com.luis.soundify.presentation.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

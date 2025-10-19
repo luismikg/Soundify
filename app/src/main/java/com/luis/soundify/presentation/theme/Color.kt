@@ -1,4 +1,4 @@
-package com.luis.soundify.ui.theme
+package com.luis.soundify.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
