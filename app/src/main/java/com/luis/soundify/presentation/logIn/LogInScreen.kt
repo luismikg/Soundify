@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -71,7 +72,7 @@ fun LogInScreenContainer(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.img_girl),
-                contentDescription = "Girl listening to music",
+                contentDescription = stringResource(R.string.login_img_girl_desc),
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.fillMaxSize()
             )
@@ -110,36 +111,36 @@ fun LogInScreenContainer(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp))
                 .background(Color.Black)
-                .padding(horizontal = 32.dp, vertical = 40.dp),
+                .padding(top = 40.dp, bottom = 80.dp, start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
                 text = buildAnnotatedString {
-                    append("Desde lo ")
+                    append(stringResource(R.string.login_intro_part1) + " ")
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("ultimo")
+                        append(stringResource(R.string.login_intro_highlight1) + " ")
                     }
-                    append(" de los\n")
+                    append(stringResource(R.string.login_intro_part2))
                     withStyle(
                         style = SpanStyle(
                             color = LocalAppColors.current.blueSky,
                             fontWeight = FontWeight.Bold
                         )
                     ) {
-                        append("grandes hits,")
+                        append(stringResource(R.string.login_intro_highlight2) + " ")
                     }
-                    append(" escucha tus\n")
-                    append("tracks favoritos en ")
+                    append(stringResource(R.string.login_intro_part3))
+                    append(stringResource(R.string.login_intro_part4))
                     withStyle(
                         style = SpanStyle(
                             color = LocalAppColors.current.blueSky,
                             fontWeight = FontWeight.Bold
                         )
                     ) {
-                        append("soundify")
+                        append(" " + stringResource(R.string.app_name_lowercase) + " ")
                     }
-                    append(" ahora!")
+                    append(stringResource(R.string.login_intro_part5))
                 },
                 fontSize = 24.sp,
                 color = Color.White,
@@ -178,7 +179,7 @@ fun LogInScreenContainer(
                     .height(60.dp)
             ) {
                 Text(
-                    text = "Get Started",
+                    text = stringResource(R.string.login_button_get_started),
                     fontSize = 18.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold

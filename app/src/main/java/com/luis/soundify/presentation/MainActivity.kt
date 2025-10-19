@@ -1,5 +1,6 @@
 package com.luis.soundify.presentation
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,10 +9,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import com.luis.soundify.BuildConfig
 import com.luis.soundify.R
 import com.luis.soundify.SpotifyAuthManager
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_Soundify)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         spotifyAuthManager = SpotifyAuthManager(this)
 
@@ -37,15 +40,23 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SoundifyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        LogInScreen(
-                            viewModel = logInViewModel,
-                            onGetStartedClick = {
-                                logInViewModel.startAuthorization()
-                                spotifyAuthManager.startAuthorization()
-                            })
-                    }
+                val view = LocalView.current
+                SideEffect {
+                    val window = (view.context as Activity).window
+                    WindowCompat
+                        .getInsetsController(window, view)
+                        .isAppearanceLightStatusBars = false
+                    WindowCompat
+                        .getInsetsController(window, view)
+                        .isAppearanceLightNavigationBars = false
+                }
+                Column(modifier = Modifier.fillMaxSize()) {
+                    LogInScreen(
+                        viewModel = logInViewModel,
+                        onGetStartedClick = {
+                            logInViewModel.startAuthorization()
+                            spotifyAuthManager.startAuthorization()
+                        })
                 }
             }
         }

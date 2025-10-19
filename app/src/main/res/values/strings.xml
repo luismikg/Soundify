@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Soundify</string>
+
+    <string name="login_img_girl_desc">Girl listening to music</string>
+    <string name="login_button_get_started">Comenzar</string>
+
+    <string name="login_intro_part1">Desde lo </string>
+    <string name="login_intro_highlight1">ultimo</string>
+    <string name="login_intro_part2"> de los\n</string>
+    <string name="login_intro_highlight2">grandes hits,</string>
+    <string name="login_intro_part3">escucha tus\n</string>
+    <string name="login_intro_part4">tracks favoritos en </string>
+    <string name="app_name_lowercase">soundify</string>
+    <string name="login_intro_part5">ahora!</string>
 </resources>
