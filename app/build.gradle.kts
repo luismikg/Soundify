@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,12 @@ plugins {
 
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+}
+
+val localProps = Properties()
+val localFile = rootProject.file("local.properties")
+if (localFile.exists()) {
+    localProps.load(localFile.inputStream())
 }
 
 android {
@@ -19,6 +27,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "CLIENT_ID", "\"${localProps.getProperty("CLIENT_ID")}\"")
+        buildConfigField(
+            "String",
+            "AUTHORIZATION_ENDPOINT",
+            "\"${localProps.getProperty("AUTHORIZATION_ENDPOINT")}\""
+        )
+        buildConfigField("String", "REDIRECT_URI", "\"${localProps.getProperty("REDIRECT_URI")}\"")
     }
 
     buildTypes {
@@ -38,6 +54,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -70,4 +87,7 @@ dependencies {
 
     //Splash
     implementation(libs.androidx.core.splashscreen)
+
+    //Security-crypto
+    implementation(libs.androidx.security.crypto)
 }
