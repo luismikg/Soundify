@@ -90,4 +90,7 @@ dependencies {
 
     //Security-crypto
     implementation(libs.androidx.security.crypto)
+
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
 }

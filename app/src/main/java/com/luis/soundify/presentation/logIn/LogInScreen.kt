@@ -45,19 +45,22 @@ import com.luis.soundify.presentation.theme.LocalAppColors
 @Composable
 fun LogInScreen(
     viewModel: LogInViewModel,
-    onGetStartedClick: () -> Unit
+    onGetStartedClick: () -> Unit,
+    onNavigateToHome: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     LogInScreenContainer(
         state = state,
-        onGetStartedClick = onGetStartedClick
+        onGetStartedClick = onGetStartedClick,
+        onNavigateToHome = onNavigateToHome
     )
 }
 
 @Composable
 fun LogInScreenContainer(
     state: LogInState,
-    onGetStartedClick: () -> Unit
+    onGetStartedClick: () -> Unit,
+    onNavigateToHome: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -203,7 +206,7 @@ fun LogInScreenContainer(
 
             is LogInState.Success -> {
                 val data = state.tokenModel
-                println(data)
+                onNavigateToHome()
             }
 
             is LogInState.Error -> {
@@ -220,7 +223,8 @@ fun PreviewLogInScreen() {
     MaterialTheme {
         LogInScreenContainer(
             state = LogInState.START,
-            onGetStartedClick = {}
+            onGetStartedClick = {},
+            onNavigateToHome = {}
         )
     }
 }

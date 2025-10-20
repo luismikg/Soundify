@@ -17,8 +17,8 @@ import androidx.core.view.WindowCompat
 import com.luis.soundify.BuildConfig
 import com.luis.soundify.R
 import com.luis.soundify.SpotifyAuthManager
-import com.luis.soundify.presentation.logIn.LogInScreen
 import com.luis.soundify.presentation.logIn.LogInViewModel
+import com.luis.soundify.presentation.navigation.NavigationComponent
 import com.luis.soundify.presentation.theme.SoundifyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,12 +51,13 @@ class MainActivity : ComponentActivity() {
                         .isAppearanceLightNavigationBars = false
                 }
                 Column(modifier = Modifier.fillMaxSize()) {
-                    LogInScreen(
-                        viewModel = logInViewModel,
+                    NavigationComponent(
+                        logInViewModel = logInViewModel,
                         onGetStartedClick = {
                             logInViewModel.startAuthorization()
                             spotifyAuthManager.startAuthorization()
-                        })
+                        }
+                    )
                 }
             }
         }

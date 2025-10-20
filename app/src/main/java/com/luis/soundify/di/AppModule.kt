@@ -5,6 +5,7 @@ import com.luis.soundify.data.DataConstants
 import com.luis.soundify.data.local.SecureStorage
 import com.luis.soundify.data.remote.SpotifyApiClient
 import com.luis.soundify.data.remote.SpotifyAuthApiService
+import com.luis.soundify.data.remote.SpotifyAuthInterceptor
 import com.luis.soundify.data.repository.LogInRepositoryImpl
 import com.luis.soundify.domain.repository.LogInRepository
 import dagger.Module
@@ -12,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -30,10 +32,16 @@ class AppModule {
     }
 
     @Provides
-    fun provideSpotifyApiClient(): SpotifyApiClient {
+    fun provideSpotifyApiClient(secureStorage: SecureStorage): SpotifyApiClient {
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(SpotifyAuthInterceptor(secureStorage))
+            .build()
+
         return Retrofit
             .Builder()
             .baseUrl(DataConstants.BASE_URL_CLIENT)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(SpotifyApiClient::class.java)
