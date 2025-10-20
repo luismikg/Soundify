@@ -7,7 +7,9 @@ import com.luis.soundify.data.remote.SpotifyApiClient
 import com.luis.soundify.data.remote.SpotifyAuthApiService
 import com.luis.soundify.data.remote.SpotifyAuthInterceptor
 import com.luis.soundify.data.repository.LogInRepositoryImpl
+import com.luis.soundify.data.repository.MusicRepositoryImpl
 import com.luis.soundify.domain.repository.LogInRepository
+import com.luis.soundify.domain.repository.MusicRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -61,5 +63,10 @@ class AppModule {
             spotifyAuthApiService = spotifyAuthApiService,
             secureStorage = secureStorage
         )
+    }
+
+    @Provides
+    fun provideMusicRepository(spotifyApiClient: SpotifyApiClient): MusicRepository {
+        return MusicRepositoryImpl(spotifyApiClient = spotifyApiClient)
     }
 }

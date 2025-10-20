@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luis.soundify.R
+import com.luis.soundify.presentation.composables.Loading
 import com.luis.soundify.presentation.theme.LocalAppColors
 
 @Composable
@@ -193,15 +193,7 @@ fun LogInScreenContainer(
         when (state) {
             LogInState.START -> {}
             LogInState.Loading -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.5f)),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator(color = LocalAppColors.current.blueSky)
-                }
+                Loading()
             }
 
             is LogInState.Success -> {
