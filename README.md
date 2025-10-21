@@ -3,6 +3,8 @@
 Muestra artistas, álbumes y canciones usando la **Spotify Web API**.  
 Desarrollada en **Kotlin**, **Jetpack Compose**, **MVVM** y **Clean Architecture**.
 
+![myfile](https://github.com/luismikg/Soundify/blob/main/Soundify.gif)
+
 ---
 
 ## Tecnologías usadas
