@@ -38,4 +38,21 @@ class LogInRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun refreshAccessTokenSynchronous(): Result<Unit> {
+        val refreshToken = secureStorage.getRefreshToken()
+            ?: return Result.failure(Exception("No refresh token stored"))
+        val response = spotifyAuthApiService.refreshToken(refreshToken = refreshToken)
+
+        return if (response.isSuccessful) {
+            response.body()?.let { tokenResponse ->
+                secureStorage.saveToken(tokenResponse.accessToken)
+                secureStorage.saveRefreshToken(tokenResponse.refreshToken ?: "")
+
+                Result.success(Unit)
+            } ?: Result.failure(Exception("Request refresh token Error, no body structure found!!"))
+        } else {
+            Result.failure(Exception("Request refresh token failed with code: ${response.code()}"))
+        }
+    }
 }

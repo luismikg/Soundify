@@ -27,7 +27,9 @@ class SecureStorage(context: Context) {
         }
     }
 
-    fun getToken(): String? = sharedPreferences.getString(DataConstants.KEY_ACCESS_TOKEN, null)
+    fun getToken(): String? {
+        return sharedPreferences.getString(DataConstants.KEY_ACCESS_TOKEN, null)
+    }
 
     fun clearToken() {
         sharedPreferences.edit {
@@ -42,8 +44,9 @@ class SecureStorage(context: Context) {
         }
     }
 
-    fun getRefreshToken(): String? =
-        sharedPreferences.getString(DataConstants.KEY_ACCESS_REFRESH_TOKEN, null)
+    fun getRefreshToken(): String? {
+        return sharedPreferences.getString(DataConstants.KEY_ACCESS_REFRESH_TOKEN, null)
+    }
 
     fun clearRefreshToken() {
         sharedPreferences.edit {

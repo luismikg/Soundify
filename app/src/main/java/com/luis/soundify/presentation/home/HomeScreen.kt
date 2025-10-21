@@ -49,7 +49,7 @@ import com.luis.soundify.presentation.composables.Loading
 import com.luis.soundify.presentation.theme.LocalAppColors
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(onNavigateToArtist: (String) -> Unit) {
 
     val viewModel: HomeViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
@@ -61,19 +61,21 @@ fun HomeScreen() {
 
         is HomeState.Success -> {
             val data = (state as HomeState.Success).listGenreModel
-            HomeScreenContainer(data)
+            HomeScreenContainer(data = data, onNavigateToArtist = onNavigateToArtist)
         }
     }
 }
 
 @Composable
-private fun HomeScreenContainer(data: List<GenreUIModel>) {
+private fun HomeScreenContainer(
+    data: List<GenreUIModel>,
+    onNavigateToArtist: (String) -> Unit
+) {
     Box {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black)
-                //.padding(horizontal = 16.dp, vertical = 8.dp)
                 .padding(top = 12.dp, bottom = 0.dp, start = 16.dp, end = 16.dp)
 
         ) {
@@ -102,7 +104,7 @@ private fun HomeScreenContainer(data: List<GenreUIModel>) {
             }
 
             Button(
-                onClick = {},
+                onClick = { onNavigateToArtist(data.random().name) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
@@ -140,7 +142,7 @@ private fun HomeScreenContainer(data: List<GenreUIModel>) {
                     GenreCardItem(
                         genre = genre,
                         backgroundColor = genreColors[genre.colorIndex],
-                        onClick = { }
+                        onClick = { onNavigateToArtist(genre.name) }
                     )
                 }
 
@@ -158,7 +160,7 @@ private fun HomeScreenContainer(data: List<GenreUIModel>) {
                     GenreCardItem(
                         genre = genre,
                         backgroundColor = genreColors[genre.colorIndex],
-                        onClick = { }
+                        onClick = { onNavigateToArtist(genre.name) }
                     )
                 }
 
@@ -290,7 +292,7 @@ fun PreviewSearchScreen() {
     )
 
     MaterialTheme {
-        HomeScreenContainer(data = sampleGenres)
+        HomeScreenContainer(data = sampleGenres, onNavigateToArtist = {})
     }
 }
 

@@ -13,8 +13,13 @@
     <string name="app_name_lowercase">soundify</string>
     <string name="login_intro_part5">ahora!</string>
     <string name="search">Buscar</string>
-    <string name="random_genre">Género random</string>
+    <string name="random_genre">¡Sorprendeme Soundify!</string>
     <string name="top_genre">Géneros Top</string>
     <string name="explore">Explora</string>
     <string name="shadow">sombra</string>
+    <string name="searching">Buscando ...</string>
+    <string name="top_singers">Cantantes top</string>
+    <string name="explore_singers">Explora un cantante</string>
+    <string name="followers">M seguidores</string>
+    <string name="singer">Artista</string>
 </resources>

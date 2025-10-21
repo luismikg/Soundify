@@ -6,6 +6,7 @@ import com.luis.soundify.data.local.SecureStorage
 import com.luis.soundify.data.remote.SpotifyApiClient
 import com.luis.soundify.data.remote.SpotifyAuthApiService
 import com.luis.soundify.data.remote.SpotifyAuthInterceptor
+import com.luis.soundify.data.remote.SpotifyAuthenticator
 import com.luis.soundify.data.repository.LogInRepositoryImpl
 import com.luis.soundify.data.repository.MusicRepositoryImpl
 import com.luis.soundify.domain.repository.LogInRepository
@@ -34,9 +35,13 @@ class AppModule {
     }
 
     @Provides
-    fun provideSpotifyApiClient(secureStorage: SecureStorage): SpotifyApiClient {
+    fun provideSpotifyApiClient(
+        secureStorage: SecureStorage,
+        logInRepository: LogInRepository
+    ): SpotifyApiClient {
 
         val client = OkHttpClient.Builder()
+            .authenticator(SpotifyAuthenticator(secureStorage, logInRepository))
             .addInterceptor(SpotifyAuthInterceptor(secureStorage))
             .build()
 

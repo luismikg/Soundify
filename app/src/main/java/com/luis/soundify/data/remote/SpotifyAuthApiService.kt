@@ -22,7 +22,7 @@ interface SpotifyAuthApiService {
     @POST("api/token")
     suspend fun refreshToken(
         @Field("grant_type") grantType: String = "refresh_token",
+        @Field("client_id") clientId: String = BuildConfig.CLIENT_ID,
         @Field("refresh_token") refreshToken: String,
-        @Field("client_id") clientId: String
     ): Response<TokenResponse>
 }

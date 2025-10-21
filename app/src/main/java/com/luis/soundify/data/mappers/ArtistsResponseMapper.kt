@@ -6,8 +6,9 @@ import com.luis.soundify.domain.models.ArtistSearchModel
 fun Artists.map(): List<ArtistSearchModel> {
     return this.items.map { artist ->
         ArtistSearchModel(
+            id = artist.id,
             name = artist.name,
-            urlImage = artist.images.first().url,
+            urlImage = artist.images.firstOrNull()?.url ?: "",
             followersTotal = artist.followers.total,
             genres = artist.genres.joinToString(", "),
             popularity = artist.popularity,

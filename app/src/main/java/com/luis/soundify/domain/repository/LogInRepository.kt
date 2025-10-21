@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface LogInRepository {
 
     fun getAccessToken(code: String, codeVerifier: String): Flow<Result<TokenModel>>
+    suspend fun refreshAccessTokenSynchronous(): Result<Unit>
 }
