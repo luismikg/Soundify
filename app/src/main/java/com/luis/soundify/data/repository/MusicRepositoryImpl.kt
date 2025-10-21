@@ -2,6 +2,7 @@ package com.luis.soundify.data.repository
 
 import com.luis.soundify.data.mappers.map
 import com.luis.soundify.data.remote.SpotifyApiClient
+import com.luis.soundify.domain.models.AlbumModel
 import com.luis.soundify.domain.models.ArtistSearchModel
 import com.luis.soundify.domain.models.GenreModel
 import com.luis.soundify.domain.repository.MusicRepository
@@ -25,6 +26,20 @@ class MusicRepositoryImpl @Inject constructor(
                 }
             } else {
                 emit(Result.failure(Exception("Search Error, Searching: $query")))
+            }
+        }
+    }
+
+    override fun getAlbumsByArtist(artistId: String): Flow<Result<List<AlbumModel>>> {
+        return flow {
+            val response = spotifyApiClient.getArtistAlbums(artistId = artistId)
+            if (response.isSuccessful) {
+                response.body()?.let { albumResponse ->
+                    val albumModel = albumResponse.map()
+                    emit(Result.success(albumModel))
+                }
+            } else {
+                emit(Result.failure(Exception("Error fetching albums for artist: $artistId")))
             }
         }
     }

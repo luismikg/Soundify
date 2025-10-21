@@ -4,4 +4,5 @@ sealed class Routes(val route: String) {
     data object Login : Routes("login")
     data object Home : Routes("home")
     data object Artist : Routes("artis")
+    data object Album : Routes("album")
 }

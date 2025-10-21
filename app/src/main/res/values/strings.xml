@@ -22,4 +22,7 @@
     <string name="explore_singers">Explora un cantante</string>
     <string name="followers">M seguidores</string>
     <string name="singer">Artista</string>
+    <string name="back">Atras</string>
+    <string name="albums">Albums</string>
+    <string name="albums_added">Albums agregados</string>
 </resources>

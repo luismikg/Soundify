@@ -1,4 +1,4 @@
-package com.luis.soundify.presentation.artist
+package com.luis.soundify.presentation.album
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,50 +30,62 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.luis.soundify.R
+import com.luis.soundify.domain.models.AlbumModel
 import com.luis.soundify.domain.models.ArtistSearchModel
+import com.luis.soundify.presentation.artist.ArtistState
+import com.luis.soundify.presentation.composables.AlbumItem
 import com.luis.soundify.presentation.composables.ArtistItem
 import com.luis.soundify.presentation.composables.Loading
 import com.luis.soundify.presentation.theme.LocalAppColors
 import com.luis.soundify.presentation.theme.SoundifyTheme
 
 @Composable
-fun ArtistScreen(
-    artistViewModel: ArtistViewModel,
+fun AlbumScreen(
+    artistSearchModel: ArtistSearchModel,
     onBackClick: () -> Unit,
-    onArtistClick: (ArtistSearchModel) -> Unit
+    onAlbumClick: (AlbumModel) -> Unit
 ) {
 
-    val state by artistViewModel.state.collectAsState()
+    val albumViewModel: AlbumViewModel = hiltViewModel()
+    val state by albumViewModel.state.collectAsState()
 
     when (state) {
-        is ArtistState.Search -> {
-            val genre = (state as ArtistState.Search).genre
-            artistViewModel.getArtistSearch(genre = genre)
-            Loading()
-        }
 
-        is ArtistState.Loading -> {
-            ArtistScreenContainer(
-                genreTitle = stringResource(R.string.searching),
+        is AlbumState.Starting -> {
+            AlbumScreenContainer(
+                artistSearchModel = artistSearchModel,
                 data = emptyList(),
                 onBackClick = onBackClick,
-                onArtistClick = onArtistClick
+                onAlbumClick = onAlbumClick
+            )
+            Loading()
+
+            albumViewModel.getAlbum(artistSearchModel.id)
+        }
+
+        is AlbumState.Loading -> {
+            AlbumScreenContainer(
+                artistSearchModel = artistSearchModel,
+                data = emptyList(),
+                onBackClick = onBackClick,
+                onAlbumClick = onAlbumClick
             )
             Loading()
         }
 
-        is ArtistState.Success -> {
-            val resultSuccess = (state as ArtistState.Success)
-            ArtistScreenContainer(
-                genreTitle = resultSuccess.genre,
-                data = resultSuccess.artistList,
+        is AlbumState.Success -> {
+            val resultSuccess = (state as AlbumState.Success)
+            AlbumScreenContainer(
+                artistSearchModel = artistSearchModel,
+                data = resultSuccess.albumList,
                 onBackClick = onBackClick,
-                onArtistClick = onArtistClick
+                onAlbumClick = onAlbumClick
             )
         }
 
-        is ArtistState.Error -> {
+        is AlbumState.Error -> {
             val message = (state as ArtistState.Error).error
             onBackClick()
         }
@@ -81,11 +93,11 @@ fun ArtistScreen(
 }
 
 @Composable
-fun ArtistScreenContainer(
-    genreTitle: String,
-    data: List<ArtistSearchModel>,
+fun AlbumScreenContainer(
+    artistSearchModel: ArtistSearchModel,
+    data: List<AlbumModel>,
     onBackClick: () -> Unit,
-    onArtistClick: (ArtistSearchModel) -> Unit
+    onAlbumClick: (AlbumModel) -> Unit
 ) {
     Box {
         Column(
@@ -94,6 +106,7 @@ fun ArtistScreenContainer(
                 .background(Color.Black)
                 .padding(top = 28.dp, bottom = 0.dp, start = 16.dp, end = 16.dp)
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -113,7 +126,7 @@ fun ArtistScreenContainer(
                 Spacer(modifier = Modifier.size(24.dp))
 
                 Text(
-                    text = genreTitle,
+                    text = stringResource(R.string.albums),
                     style = TextStyle(
                         fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
@@ -122,37 +135,26 @@ fun ArtistScreenContainer(
                 )
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 12.dp, bottom = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.top_singers),
-                    fontSize = 14.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
+            ArtistItem(
+                artist = artistSearchModel
+            )
 
-                Text(
-                    text = stringResource(R.string.explore_singers),
-                    fontSize = 14.sp,
-                    color = LocalAppColors.current.blueSky
-                )
-            }
+            Text(
+                text = stringResource(R.string.albums_added),
+                fontSize = 14.sp,
+                color = LocalAppColors.current.blueSky,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 22.dp)
+            )
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(24.dp),
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                items(data) { artist ->
-                    ArtistItem(
-                        artist = artist,
-                        onClick = { onArtistClick(artist) }
+                items(data) { album ->
+                    AlbumItem(
+                        albumModel = album,
+                        onClick = { onAlbumClick(album) }
                     )
                 }
 
@@ -177,59 +179,34 @@ fun ArtistScreenContainer(
 @Composable
 fun PreviewArtistListScreen() {
     val previewArtistsData = listOf(
-        ArtistSearchModel(
-            "ID",
-            "Conan Gray",
-            "https://placehold.co/120x120/1DB954/FFFFFF/png?text=CG",
-            20_000_000,
-            "Pop, Indie",
-            90,
-            ""
+        AlbumModel(
+            "Name 1",
+            "December 13, 2025",
+            urlImage = ""
         ),
-        ArtistSearchModel(
-            "ID",
-            "Chase Atlantic",
-            "https://placehold.co/120x120/1DB954/FFFFFF/png?text=CA",
-            15_000_000,
-            "R&B, Alternative",
-            85,
-            ""
+        AlbumModel(
+            "Name 2",
+            "December 13, 2025",
+            urlImage = ""
         ),
-        ArtistSearchModel(
-            "ID",
-            "beabadoobee",
-            "https://placehold.co/120x120/1DB954/FFFFFF/png?text=BB",
-            10_000_000,
-            "Indie Rock",
-            80,
-            ""
+        AlbumModel(
+            "Name 1",
+            "December 13, 2025",
+            urlImage = ""
         ),
-        ArtistSearchModel(
-            "ID",
-            "NewJeans",
-            "https://placehold.co/120x120/1DB954/FFFFFF/png?text=NJ",
-            8_000_000,
-            "Kpop",
-            95,
-            ""
-        ),
-        ArtistSearchModel(
-            "ID",
-            "keshi",
-            "https://placehold.co/120x120/1DB954/FFFFFF/png?text=KS",
-            12_000_000,
-            "R&B, Lo-Fi",
-            88,
-            ""
+        AlbumModel(
+            "Name 2",
+            "December 13, 2025",
+            urlImage = ""
         ),
     )
 
     SoundifyTheme {
-        ArtistScreenContainer(
-            genreTitle = "Your Library",
+        AlbumScreenContainer(
+            artistSearchModel = ArtistSearchModel("", "", "", 8, "", 8, ""),
             data = previewArtistsData,
             onBackClick = {},
-            onArtistClick = {}
+            onAlbumClick = {}
         )
     }
 }

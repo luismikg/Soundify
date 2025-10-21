@@ -5,6 +5,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.luis.soundify.domain.models.AlbumModel
+import com.luis.soundify.domain.models.ArtistSearchModel
+import com.luis.soundify.presentation.album.AlbumScreen
 import com.luis.soundify.presentation.artist.ArtistScreen
 import com.luis.soundify.presentation.artist.ArtistViewModel
 import com.luis.soundify.presentation.home.HomeScreen
@@ -18,6 +21,9 @@ fun NavigationComponent(
 ) {
     val navController = rememberNavController()
     val artistViewModel: ArtistViewModel = hiltViewModel()
+
+    lateinit var artistSearchModel: ArtistSearchModel
+    lateinit var albumModel: AlbumModel
 
     NavHost(
         navController = navController,
@@ -48,7 +54,21 @@ fun NavigationComponent(
             ArtistScreen(
                 artistViewModel = artistViewModel,
                 onBackClick = { navController.popBackStack() },
-                onArtistClick = {}
+                onArtistClick = { artist ->
+                    artistSearchModel = artist
+                    navController.navigate(Routes.Album.route)
+                }
+            )
+        }
+
+        composable(Routes.Album.route) {
+            AlbumScreen(
+                artistSearchModel = artistSearchModel,
+                onBackClick = { navController.popBackStack() },
+                onAlbumClick = { album ->
+                    albumModel = album
+                    //navController.navigate(Routes.Album.route)
+                }
             )
         }
     }
