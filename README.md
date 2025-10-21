@@ -229,13 +229,13 @@ La interfaz gráfica de esta aplicación está inspirada en el diseño de la sig
 
 [Musium - Music App UI & Community](https://www.figma.com/design/2Jv2554QofJiOcspngIAD2/Musium---Music-App-UI--Community-)
 
+Se utilizó como referencia para la paleta de colores, tipografía y disposición de elementos, adaptándola al desarrollo con Jetpack Compose.
+
 ## 10. Contacto
 
 Si deseas ponerte en contacto conmigo, puedes encontrarme en LinkedIn:
 
 [Luis Miguel Cabral Guzmán](https://www.linkedin.com/in/luismiguelcabralguzman/)
-
-Se utilizó como referencia para la paleta de colores, tipografía y disposición de elementos, adaptándola al desarrollo con Jetpack Compose y a la arquitectura MVVM.
 
 ¡Gracias por revisar Soundify! 🎧
 
