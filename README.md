@@ -15,7 +15,7 @@ Desarrollada en **Kotlin**, **Jetpack Compose**, **MVVM** y **Clean Architecture
 - **Retrofit** – para consumir la API de Spotify.
 - **Hilt** – para inyección de dependencias.
 - **StateFlow / Flow** – manejo de estado reactivo.
-- **EncryptedSharedPreferences / Keystore** – almacenamiento seguro de tokens.
+- **EncryptedSharedPreferences** – almacenamiento seguro de tokens.
 - **Figma** – diseño de la interfaz gráfica ([Musium Music App UI](https://www.figma.com/design/2Jv2554QofJiOcspngIAD2/Musium---Music-App-UI--Community-)).
 
 ---
