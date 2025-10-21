@@ -5,6 +5,7 @@ import com.luis.soundify.data.remote.SpotifyApiClient
 import com.luis.soundify.domain.models.AlbumModel
 import com.luis.soundify.domain.models.ArtistSearchModel
 import com.luis.soundify.domain.models.GenreModel
+import com.luis.soundify.domain.models.SongModel
 import com.luis.soundify.domain.repository.MusicRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -43,6 +44,21 @@ class MusicRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun getSongsByAlbum(albumId: String): Flow<Result<List<SongModel>>> {
+        return flow {
+            val response = spotifyApiClient.getAlbumTracks(albumId = albumId)
+            if (response.isSuccessful) {
+                response.body()?.let { songResponse ->
+                    val songModel = songResponse.map()
+                    emit(Result.success(songModel))
+                }
+            } else {
+                emit(Result.failure(Exception("Error fetching tracks for album: $albumId")))
+            }
+        }
+    }
+
 
     override fun getGenresSample(): Flow<Result<List<GenreModel>>> {
 

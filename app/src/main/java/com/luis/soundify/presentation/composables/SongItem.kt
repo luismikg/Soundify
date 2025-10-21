@@ -1,7 +1,8 @@
 package com.luis.soundify.presentation.composables
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,26 +10,29 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.luis.soundify.R
-import com.luis.soundify.core.toReadableDate
-import com.luis.soundify.domain.models.AlbumModel
+import com.luis.soundify.domain.models.SongModel
 
 @Composable
-fun AlbumItem(
-    albumModel: AlbumModel,
+fun SongItem(
+    songModel: SongModel,
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -38,20 +42,35 @@ fun AlbumItem(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = albumModel.urlImage,
-            contentDescription = albumModel.name,
-            placeholder = painterResource(R.drawable.soundifylogo),
-            modifier = Modifier
-                .size(74.dp)
-                .background(Color.Gray.copy(alpha = 0.5f))
-        )
+
+        Box() {
+            Image(
+                painter = painterResource(id = R.drawable.soundifylogo),
+                contentDescription = stringResource(R.string.shadow),
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .alpha(0.5f)
+                    .size(74.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .align(Alignment.BottomCenter)
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.play_sound),
+                contentDescription = stringResource(R.string.singer),
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .align(Alignment.Center)
+            )
+        }
 
         Spacer(modifier = Modifier.width(16.dp))
 
         Column {
             Text(
-                text = albumModel.name,
+                text = songModel.name,
                 color = Color.White,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
@@ -60,7 +79,7 @@ fun AlbumItem(
             )
 
             Text(
-                text = albumModel.releaseDate.toReadableDate(),
+                text = songModel.artist,
                 style = TextStyle(
                     color = Color.Gray,
                     fontSize = 14.sp,
@@ -77,13 +96,11 @@ fun AlbumItem(
 @Preview
 private fun AlbumItemPreview() {
 
-    AlbumItem(
-        albumModel = AlbumModel(
-            "Genero 1",
-            id = "id",
-            "Name 2",
-            "2025-11-23",
-            urlImage = ""
+    SongItem(
+        songModel = SongModel(
+            "Name 1",
+            "Artista 1",
+            urlSpotify = ""
         )
     )
 

@@ -34,7 +34,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.luis.soundify.R
 import com.luis.soundify.domain.models.AlbumModel
 import com.luis.soundify.domain.models.ArtistSearchModel
-import com.luis.soundify.presentation.artist.ArtistState
 import com.luis.soundify.presentation.composables.AlbumItem
 import com.luis.soundify.presentation.composables.ArtistItem
 import com.luis.soundify.presentation.composables.Loading
@@ -86,7 +85,7 @@ fun AlbumScreen(
         }
 
         is AlbumState.Error -> {
-            val message = (state as ArtistState.Error).error
+            val message = (state as AlbumState.Error).error
             onBackClick()
         }
     }
@@ -152,6 +151,7 @@ fun AlbumScreenContainer(
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 items(data) { album ->
+                    album.genre = artistSearchModel.genre
                     AlbumItem(
                         albumModel = album,
                         onClick = { onAlbumClick(album) }
@@ -180,21 +180,29 @@ fun AlbumScreenContainer(
 fun PreviewArtistListScreen() {
     val previewArtistsData = listOf(
         AlbumModel(
+            "Genero 1",
+            id = "id",
             "Name 1",
             "December 13, 2025",
             urlImage = ""
         ),
         AlbumModel(
+            "Genero 1",
+            id = "id",
             "Name 2",
             "December 13, 2025",
             urlImage = ""
         ),
         AlbumModel(
+            "Genero 1",
+            id = "id",
             "Name 1",
             "December 13, 2025",
             urlImage = ""
         ),
         AlbumModel(
+            "Genero 1",
+            id = "id",
             "Name 2",
             "December 13, 2025",
             urlImage = ""

@@ -140,7 +140,12 @@ fun ArtistScreenContainer(
                 Text(
                     text = stringResource(R.string.explore_singers),
                     fontSize = 14.sp,
-                    color = LocalAppColors.current.blueSky
+                    color = LocalAppColors.current.blueSky,
+                    modifier = Modifier.clickable {
+                        val artist = data.random()
+                        artist.genre = genreTitle
+                        onArtistClick(artist)
+                    }
                 )
             }
 
@@ -150,6 +155,7 @@ fun ArtistScreenContainer(
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 items(data) { artist ->
+                    artist.genre = genreTitle
                     ArtistItem(
                         artist = artist,
                         onClick = { onArtistClick(artist) }

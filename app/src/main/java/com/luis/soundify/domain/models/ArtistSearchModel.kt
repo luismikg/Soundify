@@ -7,5 +7,6 @@ data class ArtistSearchModel(
     val followersTotal: Int,
     val genres: String,
     val popularity: Int,
-    val externalProfileUrl: String
+    val externalProfileUrl: String,
+    var genre: String = ""
 )

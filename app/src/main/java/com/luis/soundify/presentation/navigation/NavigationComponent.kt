@@ -13,6 +13,7 @@ import com.luis.soundify.presentation.artist.ArtistViewModel
 import com.luis.soundify.presentation.home.HomeScreen
 import com.luis.soundify.presentation.logIn.LogInScreen
 import com.luis.soundify.presentation.logIn.LogInViewModel
+import com.luis.soundify.presentation.songs.SongScreen
 
 @Composable
 fun NavigationComponent(
@@ -67,8 +68,15 @@ fun NavigationComponent(
                 onBackClick = { navController.popBackStack() },
                 onAlbumClick = { album ->
                     albumModel = album
-                    //navController.navigate(Routes.Album.route)
+                    navController.navigate(Routes.Song.route)
                 }
+            )
+        }
+
+        composable(Routes.Song.route) {
+            SongScreen(
+                albumModel = albumModel,
+                onBackClick = { navController.popBackStack() }
             )
         }
     }

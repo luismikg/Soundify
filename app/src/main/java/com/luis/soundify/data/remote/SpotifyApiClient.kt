@@ -2,6 +2,7 @@ package com.luis.soundify.data.remote
 
 import com.luis.soundify.data.entities.albums.AlbumResponse
 import com.luis.soundify.data.entities.searchArtists.ArtistSearchResponse
+import com.luis.soundify.data.entities.songs.SongResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +24,10 @@ interface SpotifyApiClient {
         @Query("include_groups") includeGroups: String = "album,single,appears_on,compilation",
         @Query("limit") limit: Int = 50
     ): Response<AlbumResponse>
+
+    @GET("albums/{id}/tracks")
+    suspend fun getAlbumTracks(
+        @Path("id") albumId: String,
+        @Query("limit") limit: Int = 50
+    ): Response<SongResponse>
 }
