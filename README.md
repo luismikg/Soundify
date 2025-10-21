@@ -103,11 +103,12 @@ En la raíz del proyecto crea (o edita) `local.properties` y añade:
 ```properties
 # Local properties (NO subir a git)
 CLIENT_ID=tu_client_id_aqui
-REDIRECT_URI=soundify://callback
+REDIRECT_URI=tu_REDIRECT_URI_aqui
 AUTHORIZATION_ENDPOINT=https://accounts.spotify.com/authorize
 ```
 
 Reemplaza `tu_client_id_aqui` por el Client ID que obtuviste del Dashboard.
+Reemplaza `tu_REDIRECT_URI_aqui` por el REDIRECT_URI que configuraste en el Dashboard.
 
 ### C. Exponer variables en `BuildConfig`
 
